@@ -1,7 +1,26 @@
 import os
-import numpy as np
+from module.for_model.shallow_nn import shallow_nn
 
 DEBUGGER = os.getenv("DEBUGGER")
+
+def construct_and_train_model(n, layer_initializer, param_hidden, data):
+    """ construct a model and train it
+    """
+    nn = \
+        shallow_nn(
+        n = n,
+        layer_initializer = layer_initializer,
+        learning_rate = 0.0001,
+        param_hidden = param_hidden
+    )
+    ttl_loss, ttl_param = \
+        train(
+        nn = nn,
+        num_epoch = 10,
+        size_batch = 10,
+        data = data
+    )
+    return ttl_loss, ttl_param
 
 def train(nn, num_epoch, size_batch, data):
     """
