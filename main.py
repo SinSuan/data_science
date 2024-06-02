@@ -1,9 +1,9 @@
 from dotenv import load_dotenv
 from module.for_dataset.create_dataset import create_dataset
 from module.for_dataset.normalization import normalization
-
 from module.for_model.shallow_nn import shallow_nn
 from module.for_model.training import train
+from module.for_model.save_checkpoint import save_checkpoint
 
 def main():
     
@@ -26,22 +26,54 @@ def main():
     data = [X_train_n, Y_train_n, X_test_n, Y_test_n]
     
     # construct model and train
-    nn_1 = \
+    record_loss = []
+    record_param = []
+    for n in range(0,2):
+
+        loss_n = []
+        param_n = []
+        for layer_initializer in range(2):
+
+            loss_init = []
+            param_init = []
+            for param_hidden in range(0,2):
+                ttl_loss, ttl_param = \
+                    construct_and_train_model(n+1, layer_initializer, param_hidden+1, data)
+
+                loss_init.append(ttl_loss)
+                param_init.append(ttl_param)
+
+            loss_n.append(loss_init)
+            param_n.append(param_init)
+
+        record_loss.append(loss_n)
+        record_param.append(param_n)
+    
+    # save_checkpoint
+    path_fold = "checkpoints\\2024_0603_0142\\"
+    path_loss, path_param = save_checkpoint(path_fold, record_loss, record_param)
+    
+    print(path_loss)
+    print(path_param)
+
+def construct_and_train_model(n, layer_initializer, param_hidden, data):
+    """ construct a model and train it
+    """
+    nn = \
         shallow_nn(
-        n = 5,
-        layer_initializer = 0,
+        n = n,
+        layer_initializer = layer_initializer,
         learning_rate = 0.0001,
-        param_hidden = 1
+        param_hidden = param_hidden
     )
     ttl_loss, ttl_param = \
         train(
-        nn = nn_1,
-        num_epoch = 10000,
-        size_batch = 1000,
+        nn = nn,
+        num_epoch = 10,
+        size_batch = 10,
         data = data
     )
-    print(ttl_loss)
-    print(ttl_param)
+    return ttl_loss, ttl_param
 
 if __name__ == "__main__":
     load_dotenv(".env")

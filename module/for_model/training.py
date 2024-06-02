@@ -35,9 +35,9 @@ def train(nn, num_epoch, size_batch, data):
             loss_in, loss_out, param = get_checkpoint(nn, data)
             ttl_loss.append([loss_in, loss_out])
             ttl_param.append(param)
-            print(f'Epoch {epoch}/{num_epoch} loss_in: {loss_in}, loss_out: {loss_out}')
+            print(f'Epoch {epoch}/{num_epoch}\tloss_in: {loss_in},\tloss_out: {loss_out}')
     
-    return np.array(ttl_loss), ttl_param
+    return ttl_loss, ttl_param
 
 def get_checkpoint(nn, data):
     """
