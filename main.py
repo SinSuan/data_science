@@ -49,12 +49,15 @@ def main():
         record_param.append(param_n)
     
     # save_checkpoint
-    path_fold = "checkpoints\\2024_0603_0142\\"
-    path_loss, path_param = save_checkpoint(path_fold, record_loss, record_param)
+    path_folder = "checkpoints\\2024_0603_0142"
+    path_loss, path_param = save_checkpoint(path_folder, record_loss, record_param)
     
     print(path_loss)
     print(path_param)
 
 if __name__ == "__main__":
+    import os
     load_dotenv(".env")
-    main()
+    DEBUGGER = os.getenv("DEBUGGER")
+    print(f"DEBUGGER = {DEBUGGER}")
+    # main()

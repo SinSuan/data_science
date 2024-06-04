@@ -1,8 +1,14 @@
+import os
 import numpy as np
+
+DEBUGGER = os.getenv("DEBUGGER")
 
 class normalization:
     
     def __init__(self, data) -> None:
+        if DEBUGGER=="True":
+            print("exit create_dataset")
+
         self.data = data
         
         max = np.max(data)

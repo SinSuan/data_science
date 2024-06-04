@@ -1,6 +1,11 @@
+import os
 import numpy as np
 
+DEBUGGER = os.getenv("DEBUGGER")
+
 def create_dataset(random_seed: int, num_data: int) -> list:
+    if DEBUGGER=="True":
+        print("enter create_dataset")
 
     np.random.seed(random_seed)
     X_size = (num_data,2)
@@ -25,4 +30,6 @@ def create_dataset(random_seed: int, num_data: int) -> list:
     
     data = [X_train, Y_train, X_test, Y_test]
     
+    if DEBUGGER=="True":
+        print("exit create_dataset")
     return data

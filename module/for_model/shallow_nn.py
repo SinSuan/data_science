@@ -11,7 +11,10 @@ class shallow_nn:
         output = 1
     """    
 
-    def __init__(self, n, layer_initializer, learning_rate, param_hidden, param_output=1) -> None:
+    def __init__(self, n, layer_initializer) -> None:
+        if DEBUGGER=="True":
+            print("enter __init__")
+
         # fool-proof
         self.training = False
         
@@ -21,11 +24,14 @@ class shallow_nn:
         self.num_output = 1
         
         # activation function
-        self.param_hidden = param_hidden
-        self.param_output = param_output
+        # self.param_hidden_act = param_hidden_act
+        # self.param_output_act = param_output_act
+        self.param_hidden_act = 1
+        self.param_output_act = 1
         
         # hyper param
-        self.learning_rate = learning_rate
+        # self.learning_rate = learning_rate
+        self.learning_rate = 1e-5
         
         # init layer
         det = type(layer_initializer)
@@ -45,6 +51,9 @@ class shallow_nn:
             self.bias_output = ttl_layer[3]
         else:
             raise("missing for layer_initializer")
+
+        if DEBUGGER=="True":
+            print("exit __init__")
   
     def get_layer(self):
         ttl_layer = []
@@ -57,28 +66,52 @@ class shallow_nn:
     def act_hidden(self,x):
         """ tanh
         """
-        exponient = np.e**(2*self.param_hidden*x)
+        if DEBUGGER=="True":
+            print("enter act_hidden")
+
+        exponient = np.e**(2*self.param_hidden_act*x)
         y = (exponient-1)/(exponient+1)
+
+        if DEBUGGER=="True":
+            print("exit act_hidden")
         return y
     
     def div_act_hidden(self,x):
         """ tanh
         """
-        exponient = np.e**(self.param_hidden*x)
-        exponient_minus = np.e**(-self.param_hidden*x)
-        y = self.param_hidden*4/(exponient+exponient_minus)
+        if DEBUGGER=="True":
+            print("enter div_act_hidden")
+
+        exponient = np.e**(self.param_hidden_act*x)
+        exponient_minus = np.e**(-self.param_hidden_act*x)
+        y = self.param_hidden_act*4/(exponient+exponient_minus)
+
+        if DEBUGGER=="True":
+            print("exit div_act_hidden")
         return y
     
     def act_output(self, x):
         """ linear
         """
-        y = self.param_hidden*x
+        if DEBUGGER=="True":
+            print("enter act_output")
+
+        y = self.param_hidden_act*x
+
+        if DEBUGGER=="True":
+            print("exit act_output")
         return y
     
     def div_act_output(self, x):
         """ linear
         """
-        y = self.param_hidden
+        if DEBUGGER=="True":
+            print("enter div_act_output")
+
+        y = self.param_hidden_act
+
+        if DEBUGGER=="True":
+            print("exit div_act_output")
         return np.array([y])
     
     def forward(self, X, training=False):
@@ -88,6 +121,9 @@ class shallow_nn:
                 True    backward later
                 False   forward only
         """
+        if DEBUGGER=="True":
+            print(f"enter forward, training={training}")
+
         self.training = training
         if self.training is True:
             self.data = X
@@ -101,21 +137,23 @@ class shallow_nn:
         
         pred = self.output_layer_out
         
-        if DEBUGGER:
+        if DEBUGGER=="True":
             print(f"exit forward, training={training}")
         return pred
     
     def backward(self, target):
-        if DEBUGGER:
+        if DEBUGGER=="True":
             print("enter backward")
             
         if self.training is False:
-            if DEBUGGER:
+            if DEBUGGER=="True":
                 print("\tif self.training is False")
+
             raise("self.training is False")
         else:
-            if DEBUGGER:
+            if DEBUGGER=="True":
                 print("\tif self.training is True")
+
             error_output = target - self.output_layer_out
             back_output = error_output * (-1) * self.div_act_output(self.output_layer_in)
             grad_output = self.hidden_layer_out.T.dot(back_output)
@@ -131,14 +169,27 @@ class shallow_nn:
 
             # train 過後就關起來
             self.training = False
-        if DEBUGGER:
+    
+        if DEBUGGER=="True":
             print("exit backward")
 
     def evaluate(self, X, target):
+        if DEBUGGER=="True":
+            print("enter evaluate")
+        
         pred = self.forward(X)
         loss = 0.5*np.mean(np.square(target-pred))
+
+        if DEBUGGER=="True":
+            print("exit evaluate")
         return loss
     
     def predict(self, X):
+        if DEBUGGER=="True":
+            print("enter predict")
+
         pred = self.forward(X)
+
+        if DEBUGGER=="True":
+            print("exit predict")
         return pred
