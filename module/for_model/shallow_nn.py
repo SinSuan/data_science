@@ -5,10 +5,12 @@ DEBUGGER = os.getenv("DEBUGGER")
 
 class shallow_nn:
     """ a shallow neural network
-    dim
-        input = 2
-        hidden layer = n
-        output = 1
+    
+    model structure
+            dim
+            input = 2
+            hidden layer = n
+            output = 1
     """    
 
     def __init__(self, n, layer_initializer) -> None:

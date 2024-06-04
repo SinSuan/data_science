@@ -11,8 +11,8 @@ def specific_loss(name_test: str, n: int, type_loss: int, idx_checkpoint=None):
             number of nodes
 
         type_loss:  int
-            0      in-sample-loss
-            1     out-of-sample-loss
+            0   in-sample-loss
+            1   out-of-sample-loss
         
         idx_checkpoint: None or int
             best checkpoint for None (default)
@@ -25,7 +25,7 @@ def specific_loss(name_test: str, n: int, type_loss: int, idx_checkpoint=None):
     Q: When to use the result? 
     A: To get the model with desired loss.
     eg:
-        m: model_idx (int)
+        m: index of the model with desired loss (int)
         record_param[m, result_idx[m]]
         
     """
