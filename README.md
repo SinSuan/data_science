@@ -32,5 +32,5 @@ this repository:
         │  shallow_nn.py  
         └─ training.py  
 </pre>
-.env is for debug only.
+.env is for debug only.  
 You need to add the three folder by yourself: data/, GIFs/, checkpoints/
