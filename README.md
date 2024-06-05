@@ -1,5 +1,6 @@
 # Table of Contents
 - [使用說明](#使用說明)
+- [警告](#警告)
 - [Directory Tree](#directorytree)
 
 ## 使用說明
@@ -11,6 +12,9 @@
 
 1. name_experiment 會作為 checkpoints/ 下子資料夾的名稱
 2. 其他檔案有更動，則須重啟 .ipynb 的 kernel，否則不會 import 最新的檔案
+
+## 警告
+part2 依照作業要求匯 train <b>六小時</b>，建議如果只是要 demo 的話可以減少內層迴圈數(layer_initializer)，以免影響其他 code 的運行
 
 ## Directory Tree
 <pre>
