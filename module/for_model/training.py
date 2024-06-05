@@ -1,5 +1,5 @@
 import os
-import numpy as np
+from math import ceil
 from module.for_model.shallow_nn import shallow_nn
 
 DEBUGGER = os.getenv("DEBUGGER")
@@ -36,7 +36,8 @@ def train(nn, num_epoch, size_batch, data):
     x_train, y_train, _, _ = data
     ttl_loss = []
     ttl_param = []
-    num_batch = len(x_train)//size_batch + 1
+    # num_batch = len(x_train)//size_batch + 1
+    num_batch = ceil(len(x_train)//size_batch)
     
     num_record = 1000
     epoch_cycle = num_epoch//num_record
