@@ -11,7 +11,7 @@ this repository:
 │    
 ├─data (you need to add this)  
 │    
-├─GIFs (you need to add this)
+├─GIFs (you need to add this)  
 │    
 ├─checkpoints  
 │  └─experiment_name  
