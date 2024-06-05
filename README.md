@@ -1,5 +1,16 @@
 # Table of Contents
+- [使用說明](#使用說明)
 - [Directory Tree](#directorytree)
+
+## 使用說明
+步驟
+1. 創建 data/, GIFs/, checkpoints/
+2. 先執行 part2_train.ipynb, 再執行 part2_draw.ipynb (part3 同理)
+  
+注意事項:
+<pre>
+name_experiment 會作為 checkpoints/ 下子資料夾的名稱
+</pre>
 
 ## Directory Tree
 <pre>
@@ -14,7 +25,7 @@ this repository:
 ├─GIFs (you need to add this)  
 │    
 ├─checkpoints (you need to add this)  
-│  └─experiment_name  
+│  └─name_experiment  
 │     └─node_n  
 │            loss.pkl  
 │            param.pkl  
