@@ -13,7 +13,7 @@ this repository:
 │    
 ├─GIFs (you need to add this)  
 │    
-├─checkpoints  
+├─checkpoints (you need to add this)  
 │  └─experiment_name  
 │     └─node_n  
 │            loss.pkl  
@@ -33,3 +33,4 @@ this repository:
         └─ training.py  
 </pre>
 .env is for debug only.
+You need to add the three folder by yourself: data/, GIFs/, checkpoints/
