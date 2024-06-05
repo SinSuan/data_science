@@ -10,8 +10,9 @@
   
 注意事項:
 
-1. name_experiment 會作為 checkpoints/ 下子資料夾的名稱
-2. 其他檔案有更動，則須重啟 .ipynb 的 kernel，否則不會 import 最新的檔案
+1. name_experiment 會作為 checkpoints/ 下子資料夾的名稱，*.pybn 中，每個小題都會宣告一次，需要自行手動更改
+2. module\draw\draw.py 中的 plot_decision_boundary 有宣告路徑，需要手動更改成 part3_train.ipynb 中的 data_2_save
+3. 其他檔案有更動，則須重啟 .ipynb 的 kernel，否則不會 import 最新的檔案
 
 ## 警告
 part2 依照作業要求匯 train <b>六小時</b>，建議如果只是要 demo 的話可以減少內層迴圈數(layer_initializer)，以免影響其他 code 的運行
