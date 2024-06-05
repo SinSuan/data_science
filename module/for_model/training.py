@@ -31,17 +31,15 @@ def construct_and_train_model(
         nn = nn,
         data = data,
         epoch_cycle = epoch_cycle,
-        num_epoch = 1000,     # for epoch-wise
-        # num_epoch = 7,          # for batch-wise
-        size_batch = 100,     # for epoch-wise
-        # size_batch = 10,        # for batch-wise
+        num_epoch = 1000,
+        size_batch = 100,
         record_check = record_check
     )
     if DEBUGGER=="True":
         print("exit construct_and_train_model")
     return ttl_loss, ttl_param
 
-def train(nn, data, epoch_cycle, num_epoch, size_batch, record_check="epoch"):
+def train(nn, data, epoch_cycle, num_epoch, size_batch):
     """
     Var:
 
@@ -49,10 +47,6 @@ def train(nn, data, epoch_cycle, num_epoch, size_batch, record_check="epoch"):
 
         epoch_cycle: int
             record cycle
-        
-        record_check: str
-            "epoch" or "batch"
-            indicating record checkpoint epoch-wise or batch-wise
     """
     if DEBUGGER=="True":
         print("enter train")
@@ -79,14 +73,8 @@ def train(nn, data, epoch_cycle, num_epoch, size_batch, record_check="epoch"):
             
             # BackWard pass
             nn.backward(y)
-            
-            if record_check=="batch":
-                loss_in, loss_out, param = get_checkpoint(nn, data)
-                ttl_loss.append([loss_in, loss_out])
-                ttl_param.append(param)
-            
 
-        if (record_check=="epoch") and (epoch % epoch_cycle == 0):
+        if epoch % epoch_cycle == 0:
             # compute the loss
             loss_in, loss_out, param = get_checkpoint(nn, data)
             ttl_loss.append([loss_in, loss_out])

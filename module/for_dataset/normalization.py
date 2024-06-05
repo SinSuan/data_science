@@ -15,7 +15,7 @@ class normalization:
         self.min = np.min(data)
         
         self.range_original = max - self.min
-        # range_desired = 1
+        # range_desired == 1
 
     def normalize(self, data):
         new_data = (data-self.min)/self.range_original

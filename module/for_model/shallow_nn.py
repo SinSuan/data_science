@@ -11,6 +11,8 @@ class shallow_nn:
             input = 2
             hidden layer = n
             output = 1
+    
+    "div" stand for "derivative"，因為我拼錯了
     """    
 
     def __init__(self, n, layer_initializer) -> None:
@@ -26,13 +28,10 @@ class shallow_nn:
         self.num_output = 1
         
         # activation function
-        # self.param_hidden_act = param_hidden_act
-        # self.param_output_act = param_output_act
         self.param_hidden_act = 1
         self.param_output_act = 1
         
         # hyper param
-        # self.learning_rate = learning_rate
         self.learning_rate = 1e-5
         
         # init layer

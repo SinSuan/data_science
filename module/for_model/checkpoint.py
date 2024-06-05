@@ -34,15 +34,6 @@ def load_checkpoint(path_folder, loss_or_param):
     """
     if DEBUGGER=="True":
         print("enter load_checkpoint")
-
-
-    # path_loss = f"{path_folder}\\loss.pkl"
-    # with open(path_loss, 'rb') as f:
-    #     record_loss = pickle.load(f)
-    # path_param = f"{path_folder}\\param.pkl"
-    # with open(path_param, 'rb') as f:
-    #     record_param = pickle.load(f)
-    
     
     path_loss = f"{path_folder}\\{loss_or_param}.pkl"
     with open(path_loss, 'rb') as f:
@@ -72,6 +63,12 @@ def get_best_model(name_experiment, n):
 
 def specific_loss(name_experiment: str, n: int, type_loss: int, idx_checkpoint=None):
     """
+    Q: When and how to use the result? 
+    A: To get the model with desired loss.
+    eg:
+        m: index of the model with desired loss (int)
+        record_param[m][result_idx[m]]
+    
     Var:
         name_experiment:  str
             experiment name
@@ -90,13 +87,6 @@ def specific_loss(name_experiment: str, n: int, type_loss: int, idx_checkpoint=N
     Return:
         result_loss: List[np.ndarray]
         result_idx: List[np.ndarray]
-    
-    Q: When to use the result? 
-    A: To get the model with desired loss.
-    eg:
-        m: index of the model with desired loss (int)
-        record_param[m][result_idx[m]]
-        
     """
     path_folder = f"checkpoints\\{name_experiment}\\node_{n:02d}"
     record_loss = load_checkpoint(path_folder, "loss")
