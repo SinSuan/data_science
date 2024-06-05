@@ -4,7 +4,13 @@ from module.for_model.shallow_nn import shallow_nn
 
 DEBUGGER = os.getenv("DEBUGGER")
 
-def construct_and_train_model(n, layer_initializer, data, epoch_cycle):
+def construct_and_train_model(
+    n,
+    layer_initializer,
+    data,
+    epoch_cycle,
+    record_check="epoch"
+                              ):
     """ construct a model and train it
     Var:
 
@@ -25,14 +31,17 @@ def construct_and_train_model(n, layer_initializer, data, epoch_cycle):
         nn = nn,
         data = data,
         epoch_cycle = epoch_cycle,
-        num_epoch = 1000,
-        size_batch = 100
+        num_epoch = 1000,     # for epoch-wise
+        # num_epoch = 7,          # for batch-wise
+        size_batch = 100,     # for epoch-wise
+        # size_batch = 10,        # for batch-wise
+        record_check = record_check
     )
     if DEBUGGER=="True":
         print("exit construct_and_train_model")
     return ttl_loss, ttl_param
 
-def train(nn, data, epoch_cycle, num_epoch, size_batch):
+def train(nn, data, epoch_cycle, num_epoch, size_batch, record_check="epoch"):
     """
     Var:
 
@@ -40,6 +49,10 @@ def train(nn, data, epoch_cycle, num_epoch, size_batch):
 
         epoch_cycle: int
             record cycle
+        
+        record_check: str
+            "epoch" or "batch"
+            indicating record checkpoint epoch-wise or batch-wise
     """
     if DEBUGGER=="True":
         print("enter train")
@@ -66,8 +79,15 @@ def train(nn, data, epoch_cycle, num_epoch, size_batch):
             
             # BackWard pass
             nn.backward(y)
+            
+            if record_check=="batch":
+                loss_in, loss_out, param = get_checkpoint(nn, data)
+                ttl_loss.append([loss_in, loss_out])
+                ttl_param.append(param)
+            
 
-        if epoch % epoch_cycle == 0:        # compute the loss
+        if (record_check=="epoch") and (epoch % epoch_cycle == 0):
+            # compute the loss
             loss_in, loss_out, param = get_checkpoint(nn, data)
             ttl_loss.append([loss_in, loss_out])
             ttl_param.append(param)

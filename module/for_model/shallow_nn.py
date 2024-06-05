@@ -59,10 +59,10 @@ class shallow_nn:
   
     def get_layer(self):
         ttl_layer = []
-        ttl_layer.append(self.weights_input_hidden)
-        ttl_layer.append(self.bias_hidden)
-        ttl_layer.append(self.weights_hidden_output)
-        ttl_layer.append(self.bias_output)
+        ttl_layer.append(self.weights_input_hidden.copy())
+        ttl_layer.append(self.bias_hidden.copy())
+        ttl_layer.append(self.weights_hidden_output.copy())
+        ttl_layer.append(self.bias_output.copy())
         return ttl_layer
   
     def act_hidden(self,x):

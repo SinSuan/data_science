@@ -71,27 +71,35 @@ def dataset_for_part3(random_seed, num_data):
 
     rng = np.random.default_rng()
     x_bool = rng.choice(2, len_x_flat, replace=True, shuffle=False)
-    Y = x_bool[:num_data] ^ x_bool[num_data:]
-    
-    
-    x_bool = x_bool.astype(float)   # choice 會強制把未來的新值都轉 int
+
+    x_rand = x_bool.astype(float)   # choice 會強制把未來的新值都轉 int
 
     # # 寫法一    
-    # idx_0 = np.where(x_bool==0)[0]
-    # idx_1 = np.where(x_bool==1)[0]
+    # idx_0 = np.where(x_rand==0)[0]
+    # idx_1 = np.where(x_rand==1)[0]
     # rand_0 = np.random.uniform(low=-0.5, high=0.2, size=idx_0.shape)
     # rand_1 = np.random.uniform(low=0.8, high=1.5, size=idx_1.shape)
-    # np.put(x_bool, idx_0, rand_0)
-    # np.put(x_bool, idx_1, rand_1)
+    # np.put(x_rand, idx_0, rand_0)
+    # np.put(x_rand, idx_1, rand_1)
     
     # 寫法二:   比較簡潔，但不確定這樣資料是否均勻
     rand_0 = np.random.uniform(low= -0.5, high=0.2, size=len_x_flat)
     rand_1 = np.random.uniform(low=  0.8, high=1.5, size=len_x_flat)
-    x_bool = np.where(x_bool==0, rand_0, rand_1)
-
-    # print(f"x_bool = {x_bool}")
+    x_rand = np.where(x_rand==0, rand_0, rand_1)
     
-    X = x_bool.reshape((num_data,-1))
+    # print(f"x_bool = {x_bool}")
+
+    X = x_rand.reshape((num_data,2))
+
+    x_for_y = x_bool.reshape((num_data,2))
+    Y = x_for_y[:,0] ^ x_for_y[:,1]
+    # print(type(Y))
+    # print(Y.shape)
+    # print(X.shape)
+
+    # import matplotlib.pyplot as plt
+    # plt.hist(rand_0)
+    # plt.show()
 
     return X, Y
 
