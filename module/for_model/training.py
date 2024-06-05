@@ -48,7 +48,7 @@ def train(nn, num_epoch, size_batch, data):
     for epoch in range(num_epoch):
 
         for batch in range(num_batch):
-            idx_start = batch*num_batch
+            idx_start = batch*size_batch
             idx_end = idx_start + size_batch
             x = x_train[idx_start:idx_end]
             y = y_train[idx_start:idx_end]
