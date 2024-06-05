@@ -2,7 +2,7 @@
 - [Directory Tree](#directorytree)
 
 ## Directory Tree
-
+<pre>
 this repository:  
 |  
 │  .env  
@@ -20,7 +20,7 @@ this repository:
 │            param.pkl  
 │  
 └─module  
-    ├─draw  
+│   ├─draw  
     │  └─ draw.py  
     │  
     ├─for_dataset  
@@ -31,5 +31,5 @@ this repository:
         │  checkpoint.py  
         │  shallow_nn.py  
         └─ training.py  
-
+</pre>
 .env is for debug only.
