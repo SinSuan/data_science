@@ -4,8 +4,14 @@ from module.for_model.shallow_nn import shallow_nn
 
 DEBUGGER = os.getenv("DEBUGGER")
 
-def construct_and_train_model(n, layer_initializer, data):
+def construct_and_train_model(n, layer_initializer, data, epoch_cycle):
     """ construct a model and train it
+    Var:
+
+        nn: shallow_nn
+
+        epoch_cycle: int
+            record cycle
     """
     if DEBUGGER=="True":
         print("enter construct_and_train_model")
@@ -17,18 +23,23 @@ def construct_and_train_model(n, layer_initializer, data):
     ttl_loss, ttl_param = \
         train(
         nn = nn,
+        data = data,
+        epoch_cycle = epoch_cycle,
         num_epoch = 1000,
-        size_batch = 100,
-        data = data
+        size_batch = 100
     )
     if DEBUGGER=="True":
         print("exit construct_and_train_model")
     return ttl_loss, ttl_param
 
-def train(nn, num_epoch, size_batch, data):
+def train(nn, data, epoch_cycle, num_epoch, size_batch):
     """
     Var:
+
         nn: shallow_nn
+
+        epoch_cycle: int
+            record cycle
     """
     if DEBUGGER=="True":
         print("enter train")
@@ -38,9 +49,6 @@ def train(nn, num_epoch, size_batch, data):
     ttl_param = []
     # num_batch = len(x_train)//size_batch + 1
     num_batch = ceil(len(x_train)//size_batch)
-    
-    num_record = 1000
-    epoch_cycle = num_epoch//num_record
 
     loss_in, loss_out, param = get_checkpoint(nn, data)
     ttl_loss.append([loss_in, loss_out])

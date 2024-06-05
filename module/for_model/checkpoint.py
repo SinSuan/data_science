@@ -2,6 +2,8 @@ import os
 import pickle
 import numpy as np
 
+from module.for_model.shallow_nn import shallow_nn
+
 DEBUGGER = os.getenv("DEBUGGER")
 
 def save_checkpoint(path_folder, record_loss, record_param):
@@ -24,6 +26,9 @@ def save_checkpoint(path_folder, record_loss, record_param):
 def load_checkpoint(path_folder, loss_or_param):
     """
     Var:
+        path_folder:  str
+            experiment name
+    
         loss_or_param: str
             "loss" or "param"
     """
@@ -47,11 +52,29 @@ def load_checkpoint(path_folder, loss_or_param):
         print("exit load_checkpoint")
     return result
 
-def specific_loss(name_test: str, n: int, type_loss: int, idx_checkpoint=None):
+def get_best_model(name_experiment, n):
+    ## step 0: 調出該 best model 的 best checkpoint 的參數
+    
+    # 調出 best n 的所有 model 的 best checkpoint
+    result_loss, result_idx = specific_loss(name_experiment, n, type_loss=1)
+    
+    # 找出 best model 編號
+    idx_best = result_loss.argmin()
+    
+    # 方法請參閱 module\for_model\checkpoint.py 中 specific_loss 的函式說明
+    path_folder = f"checkpoints\\{name_experiment}\\node_{n:02d}"
+    ttl_param = load_checkpoint(path_folder, "param")
+    param_best = ttl_param[idx_best][result_idx[idx_best]]
+    
+    # step 1: 建立 best model 的 best checkpoint
+    nn_best = shallow_nn(n=n, layer_initializer=param_best)
+    return nn_best, idx_best    
+
+def specific_loss(name_experiment: str, n: int, type_loss: int, idx_checkpoint=None):
     """
     Var:
-        name_test:  str
-            folder name
+        name_experiment:  str
+            experiment name
         
         n: int
             number of nodes
@@ -72,10 +95,10 @@ def specific_loss(name_test: str, n: int, type_loss: int, idx_checkpoint=None):
     A: To get the model with desired loss.
     eg:
         m: index of the model with desired loss (int)
-        record_param[m, result_idx[m]]
+        record_param[m][result_idx[m]]
         
     """
-    path_folder = f"checkpoints\\{name_test}\\node_{n:02d}"
+    path_folder = f"checkpoints\\{name_experiment}\\node_{n:02d}"
     record_loss = load_checkpoint(path_folder, "loss")
     record_loss = np.array(record_loss)
     # record_loss.shape == (30, num_checkpoint, 2)

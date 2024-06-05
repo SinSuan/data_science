@@ -21,7 +21,7 @@ def display_boxplot(name_test, type_loss):
         specific_loss(name_test, n, type_loss)[0] \
             for n in range(1,21)
     ]
-    print(ttl_loss)
+    print(ttl_loss[0])
     
     plt.boxplot(ttl_loss, patch_artist=True)
 
