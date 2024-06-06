@@ -16,7 +16,9 @@
 3. 其他檔案有更動，則須重啟 .ipynb 的 kernel，否則不會 import 最新的檔案
 
 ## 警告
-part2 依照作業要求匯 train <b>六小時</b>，建議如果只是要 demo 的話可以減少內層迴圈數(layer_initializer)，以免影響其他 code 的運行
+part2 依照作業要求匯 train <b>六小時</b>，建議如果只是要 demo 的話可以減少內層迴圈數(layer_initializer)，以免影響其他 code 的運行  
+  
+(後來補上 checkpoints.example，裡面是 part 2 的要求的紀錄)
 
 ## Directory Tree
 <pre>
