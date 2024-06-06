@@ -1,7 +1,8 @@
 # Table of Contents
 - [使用說明](#使用說明)
 - [警告](#警告)
-- [Directory Tree](#directorytree)
+- [Directory Tree](#DirectoryTree)
+- [Python Version](#PythonVersion)
 
 ## 使用說明
 步驟:
@@ -50,3 +51,6 @@ this repository:
 </pre>
 .env is for debug only.  
 You need to add the three folder by yourself: data/, GIFs/, checkpoints/
+
+## Python Version
+python==3.11.9
