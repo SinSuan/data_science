@@ -33,7 +33,7 @@ def construct_and_train_model(
         epoch_cycle = epoch_cycle,
         num_epoch = 1000,
         size_batch = 100,
-        record_check = record_check
+        # record_check = record_check
     )
     if DEBUGGER=="True":
         print("exit construct_and_train_model")

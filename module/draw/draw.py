@@ -72,5 +72,5 @@ def plot_decision_boundary(epoch, params, ax):
 
     ax.legend()
     ax.set_title(f'Epoch {epoch+1}')
-    ax.set_xlim(-0.1, 1.1)
-    ax.set_ylim(-0.1, 1.1)
+    ax.set_xlim(-1, 2)
+    ax.set_ylim(-1, 2)
