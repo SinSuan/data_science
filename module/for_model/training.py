@@ -48,7 +48,6 @@ def train(nn, data, epoch_cycle, num_epoch, size_batch=None):
     x_train, y_train, _, _ = data
     ttl_loss = []
     ttl_param = []
-    # num_batch = len(x_train)//size_batch + 1
     if size_batch!=None:
         num_batch = ceil(len(x_train)//size_batch)
     else:

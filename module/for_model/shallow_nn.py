@@ -68,58 +68,7 @@ class shallow_nn:
         for l in self.ttl_layer:
             ttl_layer += l.get_param()
         return ttl_layer
-  
-    # def act_hidden(self,x):
-    #     """ tanh
-    #     """
-    #     if DEBUGGER=="True":
-    #         print("enter act_hidden")
 
-    #     exponient = np.e**(2*self.param_hidden_act*x)
-    #     y = (exponient-1)/(exponient+1)
-
-    #     if DEBUGGER=="True":
-    #         print("exit act_hidden")
-    #     return y
-    
-    # def div_act_hidden(self,x):
-    #     """ tanh
-    #     """
-    #     if DEBUGGER=="True":
-    #         print("enter div_act_hidden")
-
-    #     exponient = np.e**(self.param_hidden_act*x)
-    #     exponient_minus = np.e**(-self.param_hidden_act*x)
-    #     y = self.param_hidden_act*4/(exponient+exponient_minus)
-
-    #     if DEBUGGER=="True":
-    #         print("exit div_act_hidden")
-    #     return y
-    
-    # def act_output(self, x):
-    #     """ linear
-    #     """
-    #     if DEBUGGER=="True":
-    #         print("enter act_output")
-
-    #     y = self.param_hidden_act*x
-
-    #     if DEBUGGER=="True":
-    #         print("exit act_output")
-    #     return y
-    
-    # def div_act_output(self, x):
-    #     """ linear
-    #     """
-    #     if DEBUGGER=="True":
-    #         print("enter div_act_output")
-
-    #     y = self.param_hidden_act
-
-    #     if DEBUGGER=="True":
-    #         print("exit div_act_output")
-    #     return np.array([y])
-    
     def forward(self, X, training=False):
         """
         Var:
@@ -135,13 +84,6 @@ class shallow_nn:
             self.data = X
         else:
             self.data = None
-
-        # self.hidden_layer_in = np.dot(X, self.weights_input_hidden) + self.bias_hidden
-        # self.hidden_layer_out = self.act_hidden(self.hidden_layer_in)
-        # self.output_layer_in = np.dot(self.hidden_layer_out, self.weights_hidden_output) + self.bias_output
-        # self.output_layer_out = self.act_output(self.output_layer_in)
-        
-        # pred = self.output_layer_out
 
         input_current = X
         for l in self.ttl_layer:
@@ -167,24 +109,13 @@ class shallow_nn:
             if DEBUGGER=="True":
                 print("\tif self.training is True")
 
-            # error_output = target - self.output_layer_out
-            # back_output = error_output * (-1) * self.div_act_output(self.output_layer_in)
-            # grad_output = self.hidden_layer_out.T.dot(back_output)
-
-            # back_hidden = back_output.dot(self.weights_hidden_output.T) * self.div_act_hidden(self.hidden_layer_in)
-            # grad_hidden = self.data.T.dot(back_hidden)
-            
-            # # update weight and bias
-            # self.weights_hidden_output -= grad_output * self.learning_rate
-            # self.bias_output -= np.sum(back_output, axis=0, keepdims=True) * self.learning_rate
-            # self.weights_input_hidden -= grad_hidden * self.learning_rate
-            # self.bias_hidden -= np.sum(back_hidden, axis=0, keepdims=True) * self.learning_rate
+            backward_ttl_layer = self.ttl_layer.copy()
+            backward_ttl_layer.reverse()
 
             error = target - self.pred
             div_loss = - 2 * error
+
             grad_previous = div_loss
-            backward_ttl_layer = self.ttl_layer.copy()
-            backward_ttl_layer.reverse()
             for l in backward_ttl_layer:                
                 grad_previous = l.backward(grad_previous, self.learning_rate)
                 
@@ -243,11 +174,7 @@ class layer:
         self.weight = weight
         self.bias = bias
         self.name = layer_name
-        
-        # print(f"\tself.get_name() = {self.get_name()}")
-        # print(f"\tself.weight.shape = {self.weight.shape}")
-        # print(f"\tself.bias.shape = {self.bias.shape}")
-        
+
         if type_actvation=="tanh":
             self.act = tanh
             self.div_act = div_tanh
@@ -304,11 +231,6 @@ class layer:
                 print("\tif self.training is True")
 
             grad_current = grad_previous * self.div_act(self.r)
-            
-            # print(f"\tself.get_name() = {self.get_name()}")
-            # print(f"\tself.weight.shape = {self.weight.shape}")
-            # print(f"\tself.bias.shape = {self.bias.shape}")
-        
             grad_next = grad_current.dot(self.weight.T)
             
             # updata this layer
