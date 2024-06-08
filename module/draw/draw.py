@@ -19,13 +19,22 @@ def display_boxplot(name_experiment, type_loss):
     #     certain ttl_loss of certain experiment
     # """
 
+    # plot boxplot
     ttl_loss = [
         specific_loss(name_experiment, n, type_loss)[0] \
             for n in range(1,21)
     ]
-    print(ttl_loss[0])
-    
+    # print(ttl_loss[0])
+    # print( np.array(ttl_loss).shape )
     plt.boxplot(ttl_loss, patch_artist=True)
+
+    # indicate the best box
+    ttl_median = np.median(ttl_loss, axis=1)
+    median_min = ttl_median.min()
+    # print( ttl_median.shape )
+    y_median = np.ones(21) * median_min
+    x_median = np.arange(1,22) - 0.5
+    plt.plot(x_median, y_median, linewidth=1, color="r")
 
     # 添加标题和标签
     plt.title("Model with Different Hidden Nodes")
@@ -66,9 +75,12 @@ def plot_decision_boundary(epoch, params, ax):
     for i in range(2):  # 假設有兩條分類線
         # y = -(weights[i][0] * x + biases[i]) / weights[i][1]
         t = -(weights[i][0] * x + biases[i]) / weights[i][1]
-        exponient = np.e**t
-        y = (exponient-1)/(exponient+1)
-        ax.plot(x, y, label=f'Line {i+1}')
+        ax.plot(x, t, label=f'Line {i+1}')
+        
+        
+        # exponient = np.e**t
+        # y = (exponient-1)/(exponient+1)
+        # ax.plot(x, y, label=f'Line {i+1}')
 
     ax.legend()
     ax.set_title(f'Epoch {epoch+1}')
