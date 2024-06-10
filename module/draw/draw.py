@@ -66,7 +66,9 @@ def plot_decision_boundary(epoch, params, ax):
     weights, biases = params[epoch]
     x = np.linspace(-1, 2, 100)
     for i in range(2):  # 假設有兩條分類線
-        y = -(weights[i][0] * x + biases[i]) / weights[i][1]
+        t = -(weights[i][0] * x + biases[i]) / weights[i][1]
+        exponient = np.e**(2*t)
+        y = (exponient-1)/(exponient+1)
         ax.plot(x, y, label=f'Line {i+1}')
 
     ax.legend()

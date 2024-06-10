@@ -34,7 +34,7 @@ class shallow_nn:
         self.param_output_act = 1
         
         # hyper param
-        self.learning_rate = 1e-5
+        self.learning_rate = 1e-3
         
         # get parameter for layers
         det = type(layer_initializer)
